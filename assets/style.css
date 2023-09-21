@@ -12,6 +12,10 @@ body {
 h3 {
     font-family: 'Dancing Script', cursive;
     font-size: 2.3rem;
+    color: white;
+    margin: 0 auto;
+    animation-name: movement;
+    animation-duration: 4s;
 }
 
 #sunflower {
