@@ -1,14 +1,50 @@
-#petal {
-	margin-left: auto;
-	margin-right: auto;
-	display: block;
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Fuggles&display=swap');
+body {
+    animation-name: color;
+    animation-duration: 5s;
+    background-color: rgb(104, 207, 35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
-.dot {
-	display: block;
-	background-color: black;
-	width: 8px;
-	height: 8px;
-	border-radius: 4px;
-	position:absolute;
+h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.3rem;
+}
+
+#sunflower {
+    animation-name: movement;
+    animation-duration: 4s;
+}
+
+#sunflower2 {
+    animation-name: movement;
+    animation-duration: 4s;
+}
+
+@keyframes color {
+    from {
+        background-color: black;
+    }
+    to {
+        background-color: rgb(104, 207, 35);
+    }
+}
+
+@keyframes movement {
+    0% {
+        opacity: 0;
+        transform: translateY(990px) rotate(200deg);
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg);
+    }
 }

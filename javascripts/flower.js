@@ -1,37 +1,92 @@
-var count = 0; // The number of dots in the flower
+(function() {
+	// global variables
+	var width = 400;
+	var height = 400;
 
-var dot_top = 0;
-var dot_left = 0;
+	var canvas = document.getElementById('sunflower');
+	var canvas2 = document.getElementById('sunflower2')
+	var context = canvas.getContext('2d');
+	var context2 = canvas2.getContext('2d')
 
-$(window).click(function() {
-	// $(".dot").css("left", window_width/2);
-	// $(".dot").css("top", window_height/2);
-	$("#dots").append('<div class="dot" id="' + count +'"></div>')
-	grow(count);
-	count += 1;
-});
+	canvas.width = width;
+	canvas.height = height;
 
-function grow(n){
-	// Moves the nth dot
-	var angle = 0;
-	var distance = 0;
-	
-	angle = n * (720 - 360 * 1.61803399);
-	distance = n * 2;
-	
-	// Calculate the new position of the nth dot, 
-	// rembering that the angle rotates clock-wise from the y-axis.
-	with (Math) {
-		dot_top = cos(angle) * distance;
-		dot_left = sin(angle) * distance;
+	canvas2.width = width;
+	canvas2.height = height;
+
+	drawPetals(context);
+	drawFlorets(context);
+	drawPetals(context2);
+	drawFlorets(context2);
+
+	function drawPetals(context) {
+		var x0 = 200;
+		var y0 = 200
+		var d = 235;
+
+		var x1  = 200 - x0;
+		var y1  = 200 - d;
+		var c1x = 250 - x0;
+		var c1y = 80  - d;
+		var c2x = 150 - x0;
+		var c2y = 20  - d;
+		var x2  = 200 - x0;
+		var y2  = 200 - d;
+
+		for (var i = 0; i <= 23; i++) {
+			var angle =  Math.PI/180 * 105 * i; // convert degree to radian
+
+			// rotate each point with matrix transformation
+
+			// start point
+			var xR1     =  Math.cos(angle) * x1 + Math.sin(angle) * y1 + x0;
+			var yR1     = -Math.sin(angle) * x1 + Math.cos(angle) * y2 + y0;
+
+			// end point
+			var xR2     =  Math.cos(angle) * x2 + Math.sin(angle) * y2 + x0;
+			var yR2     = -Math.sin(angle) * x2 + Math.cos(angle) * y2 + y0;
+
+			// control point 1
+			var c1xR    =  Math.cos(angle) * c1x + Math.sin(angle) * c1y + x0;
+			var c1yR    = -Math.sin(angle) * c1x + Math.cos(angle) * c1y + y0;
+
+			// control point 2
+			var c2xR    =  Math.cos(angle) * c2x + Math.sin(angle) * c2y + x0;
+			var c2yR    = -Math.sin(angle) * c2x + Math.cos(angle) * c2y + y0;
+
+
+			context.beginPath();
+			context.moveTo(xR1,yR1);
+			context.bezierCurveTo(c1xR, c1yR, c2xR, c2yR, xR2, yR2);
+
+			context.lineWidth = 4;
+			context.strokeStyle = "rgb(250, 181, 42)";
+			context.stroke();
+
+			context.fillStyle = "rgb(255, 247, 0)";
+			context.fill();
+		}
 	}
-	$(".dot#" + n).css("top", dot_top + window.innerHeight / 2);
-	$(".dot#" + n).css("left", dot_left + window.innerWidth / 2);
-	// alert(angle);
-	if (n == 0) {
-		// Create a new dot at the origin
+
+	function drawFlorets(context) {
+		for (var i = 1; i <= 500; i++) {
+			var r = 2.5 * Math.sqrt(i);
+
+			// 137.5 is golden angle, see http://en.wikipedia.org/wiki/Golden_angle for more info
+			var angle = Math.PI/180 * 137.5 * i; // convert degree to radian
+
+			var x = r * Math.cos(angle) + 200;
+			var y = r * Math.sin(angle) + 200;
+
+			context.beginPath();
+			context.arc(x, y, 3, 0, 2 * Math.PI, true);
+
+			context.lineWidth = 2;
+			context.strokeStyle = "rgb(92, 78, 57)";
+			context.stroke();
+
+			context.fillStyle = "rgb(189, 162, 28)";
+			context.fill();
+		}
 	}
-	else {
-		grow(n - 1);
-	}
-};
+})();   
